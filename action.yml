@@ -1,0 +1,43 @@
+name: 'SSH Copy'
+description: 'SSHs to destination machine and copies given file/folder to it '
+author: 'Prayatna Koirala'
+inputs:
+  SOURCE:
+    description: 'The source file/folder to be copied'
+    required: true
+    default: '.'
+  DESTINATION:
+    description: 'Destination file/folder to copy to'
+    required: true
+    default: '~/'
+  USER:
+    description: 'Username of host, defaults to ubuntu'
+    required: true
+    default: 'ubuntu'
+  HOST:
+    description: 'Host url/ip i.e. destination machine'
+    required: true
+    default: ''
+  PORT:
+    description: 'Port for ssh. defaults to 22'
+    required: false
+    default: 22
+  PRIVATE_KEY:
+    description: 'Private key to ssh to the destination machine'
+    required: true
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        PRIVATE_KEY=${{ inputs.PRIVATE_KEY }}
+        USER=${{ inputs.USER }}
+        HOST=${{ inputs.HOST }}
+        PORT=${{ inputs.PORT }}
+        SOURCE=${{ inputs.SOURCE }}
+        DESTINATION=${{ inputs.DESTINATION }}
+        echo "${{inputs.PRIVATE_KEY}}" > private_key && chmod 600 private_key
+        ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST} -p ${PORT}
+        sudo apt install rsync -y
+        rsync -rvz -e "ssh -o StrictHostKeyChecking=no -i private_key -p ${PORT}" ${USER}@${HOST}:${DESTINATION}

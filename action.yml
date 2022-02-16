@@ -31,7 +31,6 @@ runs:
   using: 'composite'
   steps:
     - run: |
-        PRIVATE_KEY=${{ inputs.PRIVATE_KEY }}
         USER=${{ inputs.USER }}
         HOST=${{ inputs.HOST }}
         PORT=${{ inputs.PORT }}

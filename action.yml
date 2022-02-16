@@ -36,9 +36,6 @@ runs:
         PORT=${{ inputs.PORT }}
         SOURCE=${{ inputs.SOURCE }}
         DESTINATION=${{ inputs.DESTINATION }}
-        sudo apt-get install openssh-server -y
-        sudo systemctl start ssh
-        ssh -V
         echo "${{inputs.PRIVATE_KEY}}" > private_key && chmod 600 private_key
         ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST} -p ${PORT}
         sudo apt install rsync -y

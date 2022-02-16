@@ -41,3 +41,4 @@ runs:
         ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST} -p ${PORT}
         sudo apt install rsync -y
         rsync -rvz -e "ssh -o StrictHostKeyChecking=no -i private_key -p ${PORT}" ${USER}@${HOST}:${DESTINATION}
+      shell: bash

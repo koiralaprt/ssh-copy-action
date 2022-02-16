@@ -37,7 +37,6 @@ runs:
         SOURCE=${{ inputs.SOURCE }}
         DESTINATION=${{ inputs.DESTINATION }}
         echo "${{inputs.PRIVATE_KEY}}" > private_key && chmod 600 private_key
-        ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST} -p ${PORT}
         sudo apt install rsync -y
         rsync -rvz -e "ssh -o StrictHostKeyChecking=no -i private_key -p ${PORT}" ${USER}@${HOST}:${DESTINATION}
       shell: bash
